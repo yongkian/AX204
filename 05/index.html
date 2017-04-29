@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<canvas id="myCanvas" width="600" height="400" style="border:1px solid black;"></canvas>
+		<script>
+			var canvas;
+			var ctx;
+			var x=300, y=150, velX=100, velY=-100;
+			var r=20;
+			var gravity=0.2;
+			var WIDTH = 600;
+			var HEIGHT = 400;
+
+			function init()
+			{
+				canvas = document.getElementById("myCanvas");
+				ctx = canvas.getContext("2d");
+				return setInterval(draw, 10);
+			}
+
+			function circle(x, y, r)
+			{
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, Math.PI*2);
+				ctx.closePath();
+				ctx.fillStyle = "black";
+				ctx.fill();
+			}
+
+			function clear()
+			{
+				ctx.clearRect(0, 0, WIDTH, HEIGHT);
+			}
+
+			function draw()
+			{
+				clear();
+				
+				velY += gravity;
+				y += velY;
+				x += velX;
+
+				if (y+r > HEIGHT)
+				{
+					y = HEIGHT-r;
+					velY = -velY*0.9;
+				}
+				else if (y-r < 0)
+				{
+					y = r;
+					velY = -velY*0.9;
+				}
+
+				if (x+r > WIDTH)
+				{
+					x = WIDTH-r;
+					velX = -velX*0.5;
+				}
+				else if (x-r < 0)
+				{
+					x = r;
+					velX = -velX*0.5;
+				}
+
+				circle(x, y, r);
+			}
+			
+			function reset()
+			{
+				if (event.key == "r")
+				{
+					x=300;
+					y=150;
+					velX=100;
+					velY=-100;
+				}
+			}
+		</script>
+	</head>
+	<body onload="init()" onkeydown="reset()">
+	</body>
+</html>

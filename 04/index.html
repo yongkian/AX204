@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Image Stuff</title>
+		<canvas id="myCanvas" width="800" height="500" style="border:1px solid black;"></canvas>
+		<script>
+			function draw() {
+				var ctx = document.getElementById("myCanvas").getContext("2d");
+				var img = new Image();
+				img.src = "player.png";
+				img.onload = function()
+				{
+					ctx.drawImage(img, 300, 200, 168, 168);
+				}
+			}
+		</script>
+	</head>
+
+	<body onLoad="draw()">
+		<script>
+			
+		</script>
+	</body>
+</html>
