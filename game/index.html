@@ -1,6 +1,6 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	<meta charset="UTF-8" />
 	<title>Game</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
@@ -41,10 +41,43 @@ function create()
     ledge = platforms.create(-150, 250, "ground");
     ledge.body.immovable = true;
 
+	//Player
+	player = game.add.sprite(32,game.world.height - 220, 'dude');
+	player.animations.add('left',[0,1,2,3],10,true);
+	player.animations.add('right',[5,6,7,8],10,true);
+	game.physics.arcade.enable(player);
+	//player physics properties.
+	player.body.bounce.y = 0.2;
+	player.body.collideWorldBounds = true;
+
+	//Create keyboard entry
+	cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update()
 {
+	//Collide player with the platforms
+	game.physics.arcade.collide(player, platforms);
+    //Reset the player's velocity
+	player.body.velocity.x = 0;
+
+	if(cursors.left.isDown){
+		//Move to left
+		player.body.velocity.x = -150;
+		player.animations.play('left');
+	} else if(cursors.right.isDown){
+		player.body.velocity.x = 150;
+		player.animations.play('right');
+	}else{
+		//stand still
+		player.animations.stop();
+		player.frame = 4 ;
+	}
+
+	//Allow the player to jump only if they are touching the ground.
+	if(cursors.up.isDown && player.body.touching.down){
+		player.body.velocity.y = -350;
+	}
 }
 
 </script>
