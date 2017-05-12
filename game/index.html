@@ -49,6 +49,7 @@ function create()
 	game.physics.arcade.enable(player);
 	//player physics properties.
 	player.body.bounce.y = 0.2;
+	player.body.gravity.y = 300;
 	player.body.collideWorldBounds = true;
 
 	//Create keyboard entry
